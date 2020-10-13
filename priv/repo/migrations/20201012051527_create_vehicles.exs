@@ -19,19 +19,19 @@ defmodule Lifty.Repo.Migrations.CreateVehicles do
       add :plate, :string, null: false
       add :payload_type, :payload_type, null: false
       add :operation_type, :operation_type, null: false
-      add :certificate_of_title, {:array, :map}, null: false
+      add :certificate_of_title, {:array, :map}, null: false, default: []
       add :insurance, :string, null: false
       add :inspection_sticker, :string , null: false
-      add :photos, {:array, :map}, null: false
+      add :photos, {:array, :map}, null: false, default: []
       add :trailer_plate, :string, null: false
       add :trailer_photo, :string, null: true
-      add :trailer_certificate_of_title, {:array, :map}, null: true
+      add :trailer_certificate_of_title, {:array, :map}, null: true, default: []
       add :owner_email, :citext, null: false
       add :owner_address, :string, null: false
       add :owner_id_number, :string, null: true
       add :owner_phone, :string, null: false
-      add :owner_taxpayer_id, :map, null: true
-      add :owner_identification, {:array, :map}, null: true
+      add :owner_taxpayer_id, :map, null: true, default: %{}
+      add :owner_identification, {:array, :map}, null: true, default: []
       timestamps(type: :utc_datetime)
     end
 

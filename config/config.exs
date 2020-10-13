@@ -8,7 +8,8 @@
 use Mix.Config
 
 config :lifty,
-  ecto_repos: [Lifty.Repo]
+  ecto_repos: [Lifty.Repo],
+  generators: [binary_id: true]
 
 # Configures the endpoint
 config :lifty, LiftyWeb.Endpoint,

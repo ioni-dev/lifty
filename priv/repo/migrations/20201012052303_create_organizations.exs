@@ -16,6 +16,8 @@ defmodule Lifty.Repo.Migrations.CreateOrganizations do
       add :cellphone, :string, null: false
       add :montly_deliveries, :integer, null: false
       add :website, :string, null: false
+      add :is_active, :boolean, default: false
+      add :address, :string, null: false
       timestamps(type: :utc_datetime)
     end
 
@@ -32,7 +34,7 @@ defmodule Lifty.Repo.Migrations.CreateOrganizations do
     alter table(:vehicles) do
       add :organization_uuid, references(:organizations, type: :uuid, column: :uuid, on_delete: :delete_all), null: false
       add :driver_uuid, references(:drivers, type: :uuid, column: :uuid, on_delete: :delete_all), null: false
-      
+
     end
 
   end

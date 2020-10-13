@@ -15,7 +15,9 @@ defmodule Lifty.Repo.Migrations.CreateClients do
       add :city, :string, null: false
       add :country, :string, null: false
       add :hashed_password, :string, null: false
+      add :is_active, :boolean, default: false
       add :confirmed_at, :naive_datetime
+      add :delivery_destination, :string
       timestamps(type: :utc_datetime)
     end
 

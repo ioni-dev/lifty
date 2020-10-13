@@ -39,4 +39,9 @@ defmodule LiftyWeb.Router do
       live_dashboard "/dashboard", metrics: LiftyWeb.Telemetry
     end
   end
+
+  scope "/api", LiftyWeb do
+    pipe_through :api
+    resources "/drivers", DriverController, except: [:new, :edit]
+  end
 end
