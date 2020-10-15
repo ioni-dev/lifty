@@ -1,7 +1,17 @@
 defmodule Lifty.Drivers.Driver do
   use Ecto.Schema
   import Ecto.Changeset
-
+  alias Lifty.Drivers.Driver
+  alias Lifty.Drivers.Driver.ReferredContact
+  alias Lifty.Drivers.Driver.WorkReference
+  alias Lifty.Drivers.Driver.Certifications
+  alias Lifty.Drivers.Driver.DriverLicense
+  alias Lifty.Drivers.Driver.EmergencyContact
+  alias Lifty.Drivers.Driver.DriverLicense
+  alias Lifty.Drivers.Driver.EmergencyContact
+  alias Lifty.Drivers.Driver.PhotosId
+  alias Lifty.Drivers.Driver.Permissions
+  @primary_key {:id, :binary_id, autogenerate: true}
 
   schema "drivers" do
     field :first_name, :string
@@ -16,7 +26,7 @@ defmodule Lifty.Drivers.Driver do
     field :profile_pic, :string
     embeds_one :photos_id, PhotosId
     embeds_one :driver_license, DriverLicense
-    field :birthday, :date
+    field :date_of_birth, :date
     field :years_of_experience, :integer
     field :ways_of_reference, :string
     field :email_verified, :boolean , default: false
@@ -26,31 +36,58 @@ defmodule Lifty.Drivers.Driver do
     embeds_one :emergency_contact, EmergencyContact
     embeds_many :work_reference, WorkReference
     embeds_many :referred_contact, ReferredContact
+    embeds_one :permissions_type, Permissions
+    belongs_to :organization, Lifty.Organizations.Organization, foreign_key: :organization_id, type: :binary_id
+
     timestamps(type: :utc_datetime)
   end
 
     @doc false
-def registration_changeset(driver, attrs) do
+def changeset(%Driver{} = driver, attrs) do
   driver
   |> cast(attrs, [:first_name, :last_name, :email, :password, :cellphone, :address, :city, :country, :profile_pic,
-    :photos_id, :driver_license, :birthday, :years_of_experience, :email_verified, :active, :last_logged_in,
-    :certifications, :emergency_contact, :work_reference, :referred_contact])
+    :date_of_birth, :years_of_experience, :ways_of_reference, :email_verified, :active, :last_logged_in, :organization_id])
+  |> cast_embed(:photos_id, required: true)
+  |> cast_embed(:driver_license, required: true)
+  |> cast_embed(:certifications, required: true)
+  |> cast_embed(:emergency_contact, required: true)
+  |> cast_embed(:work_reference, required: true)
+  |> cast_embed(:referred_contact, required: true)
+  |> cast_embed(:permissions_type, required: false)
   |> validate_email()
+  # |> validate_required([:permissions])
   |> validate_password()
   |> put_password_hash()
 end
 
-defp put_password_hash(
-    %Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset
-  ) do
-    change(changeset, Bcrypt.add_hash(password))
+# defp put_password_hash(changeset) do
+#   case changeset do
+#     %Ecto.Changeset{valid?: true, changes: %{password: password}} ->
+#       put_change(changeset, :password_hash, Argon2.add_hash(password))
+#     _ ->
+#       changeset
+#   end
+# end
+
+defp put_password_hash(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
+  change(changeset, Argon2.add_hash(password))
 end
 
-defp put_password_hash(changeset) do
-  changeset
+defp put_password_hash(changeset), do: changeset
+
+defmodule Permissions do
+  use Ecto.Schema
+  import Ecto.Changeset
+
+  embedded_schema do
+    field :default, {:array, :string}
+  end
+
+  def changeset(schema, params) do
+    schema
+    |> cast(params, [:default])
+  end
 end
-
-
 
 defmodule Certifications do
   use Ecto.Schema
@@ -168,7 +205,7 @@ defp validate_password(changeset) do
   # |> validate_format(:password, ~r/[A-Z]/, message: "at least one upper case character")
   # |> validate_format(:password, ~r/[!?@#$%^&*_0-9]/, message: "at least one digit or punctuation character")
   # |> prepare_changes(&hash_password/1)
-  |> put_password_hash()
+  # |> put_password_hash()
 end
 
 
@@ -204,30 +241,4 @@ def confirm_changeset(driver) do
   change(driver, confirmed_at: now)
 end
 
-@doc """
-Verifies the password.
-If there is no driver or the driver doesn't have a password, we call
-`Bcrypt.no_user_verify/0` to avoid timing attacks.
-"""
-# def valid_password?(%Mon.Accounts.driver{hashed_password: hashed_password}, password)
-#     when is_binary(hashed_password) and byte_size(password) > 0 do
-#   Bcrypt.verify_pass(password, hashed_password)
-# end
-
-# def valid_password?(_, _) do
-#   Bcrypt.no_user_verify()
-#   false
-# end
-
-# # @doc """
-# # Validates the current password otherwise adds an error to the changeset.
-# # """
-#   def validate_current_password(changeset, password) do
-#     if valid_password?(changeset.data, password) do
-#       changeset
-#     else
-#       add_error(changeset, :current_password, "is not valid")
-#     end
-#   end
-# end
 end

@@ -13,7 +13,7 @@ defmodule Lifty.Repo.Migrations.CreateVehicles do
     execute("CREATE TYPE operation_type AS ENUM ('Local', 'First mile', 'Last mile', 'Metropolitan', 'National')")
 
     create table(:vehicles, primary_key: false) do
-      add :uuid, :uuid, primary_key: true
+      add :id, :uuid, primary_key: true
       add :type, :vehicle_type, null: false
       add :body_frame, :bodywork, null: false
       add :plate, :string, null: false

@@ -19,10 +19,14 @@ defmodule LiftyWeb.Router do
     get "/", PageController, :index
   end
 
+
   # Other scopes may use custom stacks.
-  # scope "/api", LiftyWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", LiftyWeb do
+    pipe_through :api
+    resources "/drivers", DriverController, except: [:new, :edit]
+    resources "/organizations", OrganizationController, except: [:new, :edit]
+    resources "/clients", ClientController, except: [:new, :edit]
+  end
 
   # Enables LiveDashboard only for development
   #
@@ -40,8 +44,4 @@ defmodule LiftyWeb.Router do
     end
   end
 
-  scope "/api", LiftyWeb do
-    pipe_through :api
-    resources "/drivers", DriverController, except: [:new, :edit]
-  end
 end

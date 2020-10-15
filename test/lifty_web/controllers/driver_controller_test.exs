@@ -17,7 +17,7 @@ defmodule LiftyWeb.DriverControllerTest do
     email_verified: true,
     emergency_contact: %{},
     first_name: "some first_name",
-    id_photos: %{},
+    photos_id: %{},
     last_logged_in: "2010-04-17T14:00:00Z",
     last_name: "some last_name",
     password_hash: "some password_hash",
@@ -40,7 +40,7 @@ defmodule LiftyWeb.DriverControllerTest do
     email_verified: false,
     emergency_contact: %{},
     first_name: "some updated first_name",
-    id_photos: %{},
+    photos_id: %{},
     last_logged_in: "2011-05-18T15:01:01Z",
     last_name: "some updated last_name",
     password_hash: "some updated password_hash",
@@ -50,7 +50,7 @@ defmodule LiftyWeb.DriverControllerTest do
     work_reference: [],
     years_of_experience: 43
   }
-  @invalid_attrs %{active: nil, address: nil, cellphone: nil, certifications: nil, city: nil, country: nil, date_of_birth: nil, driver_license: nil, email: nil, email_verified: nil, emergency_contact: nil, first_name: nil, id_photos: nil, last_logged_in: nil, last_name: nil, password_hash: nil, profile_pic: nil, referred_contact: nil, ways_of_reference: nil, work_reference: nil, years_of_experience: nil}
+  @invalid_attrs %{active: nil, address: nil, cellphone: nil, certifications: nil, city: nil, country: nil, date_of_birth: nil, driver_license: nil, email: nil, email_verified: nil, emergency_contact: nil, first_name: nil, photos_id: nil, last_logged_in: nil, last_name: nil, password_hash: nil, profile_pic: nil, referred_contact: nil, ways_of_reference: nil, work_reference: nil, years_of_experience: nil}
 
   def fixture(:driver) do
     {:ok, driver} = Drivers.create_driver(@create_attrs)
@@ -89,7 +89,7 @@ defmodule LiftyWeb.DriverControllerTest do
                "email_verified" => true,
                "emergency_contact" => %{},
                "first_name" => "some first_name",
-               "id_photos" => %{},
+               "photos_id" => %{},
                "last_logged_in" => "2010-04-17T14:00:00Z",
                "last_name" => "some last_name",
                "profile_pic" => "some profile_pic",
@@ -129,7 +129,7 @@ defmodule LiftyWeb.DriverControllerTest do
                "email_verified" => false,
                "emergency_contact" => %{},
                "first_name" => "some updated first_name",
-               "id_photos" => %{},
+               "photos_id" => %{},
                "last_logged_in" => "2011-05-18T15:01:01Z",
                "last_name" => "some updated last_name",
                "profile_pic" => "some updated profile_pic",

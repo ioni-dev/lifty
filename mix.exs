@@ -47,7 +47,11 @@ defmodule Lifty.MixProject do
       {:plug_cowboy, "~> 2.0"},
       # {:pow, "~> 1.0.21"},
       {:phoenix_live_view, "~> 0.14.7"},
-      {:bcrypt_elixir, "~> 2.2"}
+      {:argon2_elixir, "~> 2.0"},
+      {:ueberauth, "~> 0.6.3"},
+      {:ueberauth_identity, "~> 0.3.0"},
+      {:guardian, "~> 2.1"},
+      {:comeonin, "~> 5.3"}
     ]
   end
 

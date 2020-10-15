@@ -11,7 +11,7 @@ defmodule Lifty.Repo.Migrations.CreateVehicleTypes do
     '14,001–16,000 pounds', '16,001–19,500 pounds', '19,501–26,000 pounds', '26,001–33,000 pounds', '33,001+ pounds')")
 
     create table(:vehicle_types, primary_key: false) do
-      add :uuid, :uuid, primary_key: true
+      add :id, :uuid, primary_key: true
       add :us_gvwr_class, :us_truck_class, null: false
       add :duty_classification, :duty_classification, null: false
       add :weight_limit, :weight_range, null: false

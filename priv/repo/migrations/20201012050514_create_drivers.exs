@@ -1,11 +1,11 @@
-defmodule Lifty.Repo.Migrations.CreateUsers do
+defmodule Lifty.Repo.Migrations.CreateDrivers do
   use Ecto.Migration
 
   def change do
     execute "CREATE EXTENSION IF NOT EXISTS citext", ""
     execute("CREATE TYPE references_type AS ENUM ('Facebook', 'Referred', 'Instagram')")
     create table(:drivers, primary_key: false) do
-      add :uuid, :uuid, primary_key: true
+      add :id, :uuid, primary_key: true
       add :first_name, :string, size: 40, null: false
       add :last_name, :string, size: 40, null: false
       add :email, :citext, null: false
@@ -15,7 +15,7 @@ defmodule Lifty.Repo.Migrations.CreateUsers do
       add :city, :string, null: false
       add :country, :string, null: false
       add :profile_pic, :string, null: false
-      add :id_photos, :map, null: false, default: %{}
+      add :photos_id, :map, null: false, default: %{}
       add :driver_license, :map, null: false, default: %{}
       add :date_of_birth, :date, null: false
       add :years_of_experience, :integer, null: false
@@ -27,6 +27,7 @@ defmodule Lifty.Repo.Migrations.CreateUsers do
       add :emergency_contact, :map, null: false, default: %{}
       add :work_reference, {:array, :map}, null: false, default: []
       add :referred_contact, {:array, :map}, null: false, default: []
+      add :permissions_type, :map, default: %{}
       timestamps(type: :utc_datetime)
     end
 

@@ -20,7 +20,7 @@ defmodule LiftyWeb.DriverView do
       city: driver.city,
       country: driver.country,
       profile_pic: driver.profile_pic,
-      id_photos: driver.id_photos,
+      photos_id: driver.photos_id,
       driver_license: driver.driver_license,
       date_of_birth: driver.date_of_birth,
       years_of_experience: driver.years_of_experience,
