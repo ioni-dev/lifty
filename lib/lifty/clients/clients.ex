@@ -101,4 +101,20 @@ defmodule Lifty.Clients do
   def change_client(%Client{} = client, attrs \\ %{}) do
     Client.changeset(client, attrs)
   end
+
+  @spec get_client_by_email_and_password(String.t, String.t) :: {:ok, Client.t} | {:error, atom}
+  def get_client_by_email_and_password(nil, password), do: {:error, :invalid}
+  def get_client_by_email_and_password(email, nil), do: {:error, :invalid}
+
+  def get_client_by_email_and_password(email, password) do
+    with  %Client{} = client <- Repo.get_by(Client, email: String.downcase(email)),
+          true <- Argon2.verify_pass(password, client.password_hash) do
+      {:ok, client}
+    else
+      _ ->
+        # Help to mitigate timing attacks
+        Argon2.no_user_verify()
+        {:error, :unauthorized}
+    end
+  end
 end

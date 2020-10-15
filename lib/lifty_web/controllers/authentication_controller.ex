@@ -5,16 +5,29 @@ defmodule LiftyWeb.AuthenticationController do
   use LiftyWeb, :controller
 
   alias Lifty.Drivers
+  alias Lifty.Clients
+  alias Lifty.Organizations
   plug Ueberauth
 
   @doc """
   Ueberauth identity (email / password) authentication callback
   """
-  def identity_callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
+  def identity_callback(%{assigns: %{ueberauth_auth: auth}} = conn, %{"type" => type}) do
+
+    require Logger
     email = auth.uid
     password = auth.credentials.other.password
+    Logger.debug "param value: #{inspect(type)}"
 
-    handle_user_conn(Drivers.get_driver_by_email_and_password(email, password), conn)
+
+    query = case type do
+       "driver" -> Drivers.get_driver_by_email_and_password(email, password)
+       "client" -> Clients.get_client_by_email_and_password(email, password)
+       "organization" -> Organizations.get_organization_by_email_and_password(email, password)
+       _ -> "Not user type specified"
+
+    end
+    handle_user_conn(query, conn)
   end
 
   # handle conn for callbacks above

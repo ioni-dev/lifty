@@ -19,6 +19,9 @@ defmodule LiftyWeb.Router do
     get "/", PageController, :index
   end
 
+  pipeline :authenticated do
+    plug LiftyWeb.Plug.AuthAccessPipeline
+  end
 
   # Other scopes may use custom stacks.
   scope "/api", LiftyWeb do
@@ -26,6 +29,8 @@ defmodule LiftyWeb.Router do
      scope "/auth" do
       post "/identity/callback", AuthenticationController, :identity_callback
     end
+    # with this line ensure that unautorize user cannot access
+    pipe_through :authenticated
     resources "/drivers", DriverController, except: [:new, :edit]
     resources "/organizations", OrganizationController, except: [:new, :edit]
     resources "/clients", ClientController, except: [:new, :edit]

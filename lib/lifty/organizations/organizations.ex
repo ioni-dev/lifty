@@ -101,4 +101,20 @@ defmodule Lifty.Organizations do
   def change_organization(%Organization{} = organization, attrs \\ %{}) do
     Organization.changeset(organization, attrs)
   end
+
+  @spec get_organization_by_email_and_password(String.t, String.t) :: {:ok, Client.t} | {:error, atom}
+  def get_organization_by_email_and_password(nil, password), do: {:error, :invalid}
+  def get_organization_by_email_and_password(email, nil), do: {:error, :invalid}
+
+  def get_organization_by_email_and_password(email, password) do
+    with  %Organization{} = organization <- Repo.get_by(Organization, email: String.downcase(email)),
+          true <- Argon2.verify_pass(password, organization.password_hash) do
+      {:ok, organization}
+    else
+      _ ->
+        # Help to mitigate timing attacks
+        Argon2.no_user_verify()
+        {:error, :unauthorized}
+    end
+  end
 end

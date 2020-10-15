@@ -50,3 +50,7 @@ config :ueberauth, Ueberauth,
     permissions: %{
       default: [:read_users, :write_users]
     }
+# Configure the authentication plug pipeline
+config :lifty, LiftyWeb.Plug.AuthAccessPipeline,
+module: Lifty.Guardian,
+error_handler: LiftyWeb.Plug.AuthErrorHandler
