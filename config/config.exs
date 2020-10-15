@@ -30,3 +30,23 @@ config :phoenix, :json_library, Jason
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"
+
+config :ueberauth, Ueberauth,
+    base_path: "/api/auth",
+    providers: [
+      identity: {Ueberauth.Strategy.Identity, [
+        callback_methods: ["POST"],
+        nickname_field: :email,
+        param_nesting: "user",
+        uid_field: :email
+      ]}
+    ]
+
+  config :lifty, Lifty.Guardian,
+    issuer: "lifty",
+    secret_key: "AcEzIvkqdm6CGH036wQtXpXVmBUkUINYO7OGpaKqSuPIaqNx1ZXqZWSv6yjD/ofk",
+
+    # We will get round to using these permissions at the end
+    permissions: %{
+      default: [:read_users, :write_users]
+    }

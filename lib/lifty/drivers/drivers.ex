@@ -108,7 +108,7 @@ defmodule Lifty.Drivers do
 
   def get_driver_by_email_and_password(email, password) do
     with  %Driver{} = driver <- Repo.get_by(Driver, email: String.downcase(email)),
-          true <- Comeonin.Argon2.check_pass(password, driver.password_hash) do
+          true <- Argon2.verify_pass(password, driver.password_hash) do
       {:ok, driver}
     else
       _ ->

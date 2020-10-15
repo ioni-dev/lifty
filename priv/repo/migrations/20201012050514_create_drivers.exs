@@ -27,7 +27,7 @@ defmodule Lifty.Repo.Migrations.CreateDrivers do
       add :emergency_contact, :map, null: false, default: %{}
       add :work_reference, {:array, :map}, null: false, default: []
       add :referred_contact, {:array, :map}, null: false, default: []
-      add :permissions_type, :map, default: %{}
+      add :permissions, :map, default: %{}
       timestamps(type: :utc_datetime)
     end
 

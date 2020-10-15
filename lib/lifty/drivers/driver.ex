@@ -36,7 +36,7 @@ defmodule Lifty.Drivers.Driver do
     embeds_one :emergency_contact, EmergencyContact
     embeds_many :work_reference, WorkReference
     embeds_many :referred_contact, ReferredContact
-    embeds_one :permissions_type, Permissions
+    embeds_one :permissions, Permissions
     belongs_to :organization, Lifty.Organizations.Organization, foreign_key: :organization_id, type: :binary_id
 
     timestamps(type: :utc_datetime)

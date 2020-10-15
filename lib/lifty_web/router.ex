@@ -23,6 +23,9 @@ defmodule LiftyWeb.Router do
   # Other scopes may use custom stacks.
   scope "/api", LiftyWeb do
     pipe_through :api
+     scope "/auth" do
+      post "/identity/callback", AuthenticationController, :identity_callback
+    end
     resources "/drivers", DriverController, except: [:new, :edit]
     resources "/organizations", OrganizationController, except: [:new, :edit]
     resources "/clients", ClientController, except: [:new, :edit]
