@@ -17,8 +17,11 @@ defmodule Lifty.Drivers do
       [%User{}, ...]
 
   """
-  def list_drivers do
-    Repo.all(Driver)
+  def list_drivers(id) do
+    # Fetch all post titles
+    query = from d in Driver,
+    where: d.organization_id == ^id
+    Repo.all(query)
   end
 
   @doc """

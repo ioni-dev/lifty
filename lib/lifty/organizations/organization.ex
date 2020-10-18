@@ -2,6 +2,7 @@ defmodule Lifty.Organizations.Organization do
   use Ecto.Schema
   import Ecto.Changeset
   alias Lifty.Organizations.Organization
+  alias Lifty.Drivers.Driver.Permissions
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
@@ -18,6 +19,7 @@ defmodule Lifty.Organizations.Organization do
     field :password_hash, :string
     field :taxpayer_id, :string
     field :website, :string
+    embeds_one :permissions, Permissions
     has_many :drivers, Lifty.Drivers.Driver
     timestamps()
   end
@@ -27,6 +29,7 @@ defmodule Lifty.Organizations.Organization do
     organization
     |> cast(attrs, [:email, :password, :password, :confirmed_at, :name, :taxpayer_id, :country, :cellphone, :montly_deliveries, :website, :is_active, :address])
     |> validate_required([:email, :password, :password, :confirmed_at, :name, :taxpayer_id, :country, :cellphone, :montly_deliveries, :website, :is_active, :address])
+    |> cast_embed(:permissions, required: false)
     |> validate_email()
     # |> validate_required([:permissions])
     |> validate_password()
@@ -90,4 +93,18 @@ defmodule Lifty.Organizations.Organization do
   end
 
   defp put_password_hash(changeset), do: changeset
+
+  defmodule Permissions do
+    use Ecto.Schema
+    import Ecto.Changeset
+    @derive {Jason.Encoder, only: [:default]}
+    embedded_schema do
+      field :default, {:array, :string}
+    end
+
+    def changeset(schema, params) do
+      schema
+      |> cast(params, [:default])
+    end
+  end
 end

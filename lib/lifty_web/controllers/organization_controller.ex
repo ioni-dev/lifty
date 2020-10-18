@@ -7,6 +7,8 @@ defmodule LiftyWeb.OrganizationController do
   action_fallback LiftyWeb.FallbackController
 
   def index(conn, _params) do
+    current_user = Guardian.Plug.current_resource(conn)
+    IO.inspect(current_user)
     organizations = Organizations.list_organizations()
     render(conn, "index.json", organizations: organizations)
   end

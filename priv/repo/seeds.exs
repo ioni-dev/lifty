@@ -25,7 +25,8 @@ alias Lifty.Organizations.Organization
   name: "Sabelina",
   password: "sabelina",
   taxpayer_id: "12345",
-  website: "sabelina.com"
+  website: "sabelina.com",
+  permissions: %{default: ["read_drivers", "write_drivers"]}
 })
 
 last_record = Lifty.Repo.get_by(Organization, email: "organization1@test.com")
@@ -125,5 +126,6 @@ IO.puts last_record.id
   first_name: "Haru",
   last_name: "aa",
   name: "Haru",
-  password: "123456789"
+  password: "123456789",
+  permissions: %{default: ["read_drivers"]},
 })

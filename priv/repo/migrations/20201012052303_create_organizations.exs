@@ -18,6 +18,7 @@ defmodule Lifty.Repo.Migrations.CreateOrganizations do
       add :website, :string, null: false
       add :is_active, :boolean, default: false
       add :address, :string, null: false
+      add :permissions, :map, default: %{}
       timestamps(type: :utc_datetime)
     end
 

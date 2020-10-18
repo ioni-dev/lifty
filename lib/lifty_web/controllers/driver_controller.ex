@@ -7,7 +7,9 @@ defmodule LiftyWeb.DriverController do
   action_fallback LiftyWeb.FallbackController
 
   def index(conn, _params) do
-    drivers = Drivers.list_drivers()
+    current_user = Guardian.Plug.current_resource(conn)
+    drivers = Drivers.list_drivers(current_user.id)
+    IO.inspect(drivers)
     render(conn, "index.json", drivers: drivers)
   end
 

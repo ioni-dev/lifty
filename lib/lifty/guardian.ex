@@ -1,6 +1,8 @@
 defmodule Lifty.Guardian do
   use Guardian, otp_app: :lifty
   alias Lifty.Drivers
+  alias Lifty.Clients
+  alias Lifty.Organizations
   def subject_for_token(resource, _claims) do
     # You can use any value for the subject of your token but
     # it should be useful in retrieving the resource later, see
@@ -19,10 +21,22 @@ defmodule Lifty.Guardian do
     # found in the `"sub"` key. In `above subject_for_token/2` we returned
     # the resource id so here we'll rely on that to look it up.
     id = claims["sub"]
-    IO.inspect(id)
-    resource = Lifty.Drivers.get_driver!(id)
+    user_type = claims["user_type"]
+    resource  = get_resource(user_type, id)
+    # resource = Lifty.Drivers.get_driver!(id)
     {:ok,  resource}
   end
+
+  def get_resource(user_type, id) do
+    resource = case user_type do
+      "driver" -> Lifty.Drivers.get_driver!(id)
+      "client" -> Clients.get_client!(id)
+      "organization" -> Organizations.get_organization!(id)
+      _ -> "Resource not found"
+    end
+    resource
+  end
+
   def resource_from_claims(_claims) do
     {:error, :reason_for_error}
   end
