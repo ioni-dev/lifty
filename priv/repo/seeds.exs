@@ -114,16 +114,16 @@ IO.puts last_record.id
 
 # Client
 
-# {:ok, _client} = Lifty.Clients.create_client(%{
-#   birthday: ~D[2028-10-21],
-#   cellphone: "1111111",
-#   city: "Montevideo",
-#   confirmed_at: "2020-01-01 00:00:00",
-#   country: "Uruguay",
-#   delivery_destination: "av. blabla",
-#   email: "client1@test.com",
-#   first_name: "Haru",
-#   last_name: "aa",
-#   name: "Haru",
-#   password: "123456789"
-# })
+{:ok, _client} = Lifty.Clients.create_client(%{
+  birthday: ~D[2028-10-21],
+  cellphone: "1111111",
+  city: "Montevideo",
+  confirmed_at: "2020-01-01 00:00:00",
+  country: "Uruguay",
+  delivery_destination: "av. blabla",
+  email: "client1@test.com",
+  first_name: "Haru",
+  last_name: "aa",
+  name: "Haru",
+  password: "123456789"
+})

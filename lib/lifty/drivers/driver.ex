@@ -53,7 +53,7 @@ def changeset(%Driver{} = driver, attrs) do
   |> cast_embed(:emergency_contact, required: true)
   |> cast_embed(:work_reference, required: true)
   |> cast_embed(:referred_contact, required: true)
-  |> cast_embed(:permissions_type, required: false)
+  |> cast_embed(:permissions, required: false)
   |> validate_email()
   # |> validate_required([:permissions])
   |> validate_password()
@@ -78,7 +78,7 @@ defp put_password_hash(changeset), do: changeset
 defmodule Permissions do
   use Ecto.Schema
   import Ecto.Changeset
-
+  @derive {Jason.Encoder, only: [:default]}
   embedded_schema do
     field :default, {:array, :string}
   end
@@ -92,7 +92,7 @@ end
 defmodule Certifications do
   use Ecto.Schema
   import Ecto.Changeset
-
+  @derive {Jason.Encoder, only: [:title, :path]}
   embedded_schema do
     field :title, :string
     field :path, :string
@@ -107,7 +107,7 @@ end
 defmodule WorkReference do
   use Ecto.Schema
   import Ecto.Changeset
-
+  @derive {Jason.Encoder, only: [:full_name, :phone, :relation, :note]}
   embedded_schema do
     field :full_name, :string
     field :phone, :string
@@ -124,7 +124,7 @@ end
 defmodule ReferredContact do
   use Ecto.Schema
   import Ecto.Changeset
-
+  @derive {Jason.Encoder, only: [:full_name, :email, :phone, :relation, :role, :note]}
   embedded_schema do
     field :full_name, :string
     field :email, :string
@@ -143,7 +143,7 @@ end
 defmodule PhotosId do
   use Ecto.Schema
   import Ecto.Changeset
-
+  @derive {Jason.Encoder, only: [:front_path, :back_path]}
   embedded_schema do
     field :front_path, :string
     field :back_path, :string
@@ -158,6 +158,7 @@ end
 defmodule DriverLicense do
   use Ecto.Schema
   import Ecto.Changeset
+  @derive {Jason.Encoder, only: [:front_path, :back_path]}
 
   embedded_schema do
     field :front_path, :string
@@ -173,6 +174,7 @@ end
 defmodule EmergencyContact do
   use Ecto.Schema
   import Ecto.Changeset
+  @derive {Jason.Encoder, only: [:full_name, :relationship, :phone, :email, :address]}
 
   embedded_schema do
     field :full_name, :string
