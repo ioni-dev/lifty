@@ -19,22 +19,22 @@ defmodule Lifty.Requests.Request do
   def changeset(request, attrs) do
     request
     |> cast(attrs, [:status, :from_latitude, :from_longitude])
-    |> validate_required([:status, :from_latitude, :from_longitude, :destinations])
-    |> cast_embed(:certifications, required: true)
+    |> validate_required([:status, :from_latitude, :from_longitude])
+    |> cast_embed(:destinations, required: true)
   end
 
   defmodule Destinations do
-  use Ecto.Schema
-  import Ecto.Changeset
-  @derive {Jason.Encoder, only: [:to_latitude, :to_longitude]}
-  embedded_schema do
-    field :to_latitude, :float
-    field :to_longitude, :float
-  end
+    use Ecto.Schema
+    import Ecto.Changeset
+    @derive {Jason.Encoder, only: [:to_latitude, :to_longitude]}
+    embedded_schema do
+      field :to_latitude, :float
+      field :to_longitude, :float
+    end
 
-  def changeset(schema, params) do
-    schema
-    |> cast(params, [:to_latitude, :to_longitude])
+    def changeset(schema, params) do
+      schema
+      |> cast(params, [:to_latitude, :to_longitude])
+    end
   end
-end
 end

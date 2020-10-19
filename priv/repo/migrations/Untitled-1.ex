@@ -24,3 +24,10 @@ mix phx.gen.json Requests Request requests \
 
 mix phx.gen.json Pickups Pickup pickups \
  status:string latitude:float longitude:float departed_at:utc_datetime_usec arrived_at:utc_datetime_usec
+
+
+mix phx.gen.json Pickups Pickup pickups \
+ status:string latitude:float longitude:float departed_at:utc_datetime_usec arrived_at:utc_datetime_usec
+
+mix phx.gen.json Rides Ride rides \
+ status:string destinations_status:array:map
