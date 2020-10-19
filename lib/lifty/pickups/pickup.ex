@@ -13,6 +13,9 @@ defmodule Lifty.Pickups.Pickup do
     belongs_to :client, Lifty.Clients.Client
     belongs_to :request, Lifty.Requests.Request
     belongs_to :driver, Lifty.Drivers.Driver
+    has_many :ride, Lifty.Rides.Ride
+    has_many :ride, Lifty.Rides.Ride
+    has_one :log, Lifty.Logs.Log
 
     timestamps()
   end

@@ -8,6 +8,11 @@ defmodule Lifty.Rides.Ride do
     field :status, :string
     embeds_many :destinations_status, DestinationsStatus
 
+    belongs_to :client, Lifty.Clients.Client
+    belongs_to :pickup, Lifty.Pickups.Pickup
+    belongs_to :driver, Lifty.Drivers.Driver
+    has_one :log, Lifty.Logs.Log
+
     timestamps()
   end
 

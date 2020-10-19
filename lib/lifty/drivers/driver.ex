@@ -39,6 +39,7 @@ defmodule Lifty.Drivers.Driver do
     embeds_one :permissions, Permissions
     belongs_to :organization, Lifty.Organizations.Organization, foreign_key: :organization_id, type: :binary_id
     has_many :pickup, Lifty.Pickups.Pickup
+    has_many :ride, Lifty.Rides.Ride
 
     timestamps(type: :utc_datetime)
   end

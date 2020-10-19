@@ -22,6 +22,7 @@ defmodule Lifty.Clients.Client do
     embeds_one :permissions_type, Permissions
     has_many :request, Lifty.Requests.Request
     has_many :pickup, Lifty.Pickups.Pickup
+    has_many :ride, Lifty.Rides.Ride
 
     timestamps()
   end

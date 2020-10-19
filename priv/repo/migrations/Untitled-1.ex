@@ -31,3 +31,6 @@ mix phx.gen.json Pickups Pickup pickups \
 
 mix phx.gen.json Rides Ride rides \
  status:string destinations_status:array:map
+
+ mix phx.gen.json Logs Log logs \
+  latitude:float longitude:float
