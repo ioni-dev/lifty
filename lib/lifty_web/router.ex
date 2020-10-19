@@ -31,13 +31,13 @@ defmodule LiftyWeb.Router do
     end
     # with this line ensure that unautorize user cannot access
     pipe_through :authenticated
-    resources "/drivers", DriverController, except: [:new, :edit]
-    resources "/organizations", OrganizationController, except: [:new, :edit]
-    resources "/clients", ClientController, except: [:new, :edit]
-    resources "/requests", RequestController, except: [:new, :edit]
-    resources "/pickups", PickupController, except: [:new, :edit]
-    resources "/rides", RideController, except: [:new, :edit]
-    resources "/logs", LogController, except: [:new, :edit]
+      resources "/drivers", DriverController, except: [:new, :edit]
+      resources "/organizations", OrganizationController, except: [:new, :edit]
+      resources "/clients", ClientController, except: [:new, :edit]
+      resources "/requests", RequestController, except: [:new, :edit]
+      resources "/pickups", PickupController, except: [:new, :edit]
+      resources "/rides", RideController, except: [:new, :edit]
+      resources "/logs", LogController, except: [:new, :edit]
   end
 
   # Enables LiveDashboard only for development
