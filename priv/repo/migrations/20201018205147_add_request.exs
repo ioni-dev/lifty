@@ -11,7 +11,7 @@ defmodule Lifty.Repo.Migrations.AddRideRequest do
       add :from_longitude, :float
       # add :to_latitude, :float
       # add :to_longitude, :float
-      add :destinations, :map, null: false
+      add :destinations, {:array, :map}, null: false, default: []
       add :client_id, references(:clients, type: :uuid, column: :id, on_delete: :delete_all), null: false
 
       timestamps(type: :utc_datetime)

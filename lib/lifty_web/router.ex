@@ -34,6 +34,7 @@ defmodule LiftyWeb.Router do
     resources "/drivers", DriverController, except: [:new, :edit]
     resources "/organizations", OrganizationController, except: [:new, :edit]
     resources "/clients", ClientController, except: [:new, :edit]
+    resources "/requests", RequestController, except: [:new, :edit]
   end
 
   # Enables LiveDashboard only for development

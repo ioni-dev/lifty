@@ -11,7 +11,7 @@ defmodule Lifty.Repo.Migrations.AddRide do
       #  add :completed_at, :utc_datetime_usec
       #  add :latitude, :float, null: false
       #  add :longitude, :float, null: false
-       add :destinations_status, :map, null: false
+       add :destinations_status, {:array, :map}, null: false, default: []
 
        add :pickup_id, references(:pickups, type: :uuid, column: :id, on_delete: :delete_all), null: false
        add :driver_id, references(:drivers, type: :uuid, column: :id, on_delete: :delete_all), null: false

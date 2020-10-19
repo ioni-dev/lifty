@@ -17,3 +17,10 @@ mix phx.gen.json Organization Organization organizations \
  first_name:string last_name:string cellphone:string \
  birthday:date city:string country:string password:string \
  password_hash:string confirmed_at:naive_datetime delivery_destination:string
+
+
+mix phx.gen.json Requests Request requests \
+ status:string from_latitude:float from_longitude:float destinations:array:map
+
+mix phx.gen.json Pickups Pickup pickups \
+ status:string latitude:float longitude:float departed_at:utc_datetime_usec arrived_at:utc_datetime_usec
