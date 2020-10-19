@@ -9,6 +9,8 @@ defmodule Lifty.Requests.Request do
     field :from_latitude, :float
     field :from_longitude, :float
     field :status, :string
+    belongs_to :client, Lifty.Clients.Client
+    has_many :pickup, Lifty.Pickups.Pickup
 
     timestamps()
   end

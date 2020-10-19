@@ -3,6 +3,7 @@ defmodule Lifty.Clients.Client do
   import Ecto.Changeset
   alias Lifty.Clients.Client.Permissions
 
+
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "clients" do
@@ -19,6 +20,8 @@ defmodule Lifty.Clients.Client do
     field :password_hash, :string
     field :password, :string, virtual: true
     embeds_one :permissions_type, Permissions
+    has_many :request, Lifty.Requests.Request
+    has_many :pickup, Lifty.Pickups.Pickup
 
     timestamps()
   end
