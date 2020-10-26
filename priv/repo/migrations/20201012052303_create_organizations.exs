@@ -3,21 +3,20 @@ defmodule Lifty.Repo.Migrations.CreateOrganizations do
 
   def change do
     execute "CREATE EXTENSION IF NOT EXISTS citext", ""
-    execute("CREATE TYPE countries AS ENUM ('Uruguay')")
-
+    execute("CREATE TYPE role_type AS ENUM ('Super Admin', 'Admin', 'Planner')")
     create table(:organizations, primary_key: false) do
       add :id, :uuid, primary_key: true
-      add :email, :citext, null: false
+      add :email, :citext, null: false, default: ""
+      add :full_name, :string, null: false, default: ""
       add :password_hash, :string, null: false
       add :confirmed_at, :naive_datetime
-      add :name, :string, null: false
-      add :taxpayer_id, :string, null: false
-      add :country, :countries, null: false, default: "Uruguay"
-      add :cellphone, :string, null: false
-      add :montly_deliveries, :integer, null: false
-      add :website, :string, null: false
-      add :is_active, :boolean, default: false
-      add :address, :string, null: false
+      add :organization_name, :string, null: false
+      add :country, :string, null: false, default: ""
+      add :cellphone, :string, null: false, default: ""
+      add :vehicule_quantity, :integer, null: false, default: 0
+      add :is_active, :boolean, default: false,  default: false
+      add :email_confirmed, :boolean, null: false, default: false
+      add :role, :role_type, null: false, default: "Super Admin"
       add :permissions, :map, default: %{}
       timestamps(type: :utc_datetime)
     end
@@ -26,10 +25,6 @@ defmodule Lifty.Repo.Migrations.CreateOrganizations do
 
     alter table(:drivers) do
       add :organization_id, references(:organizations, type: :uuid, column: :id, on_delete: :delete_all), null: true
-    end
-
-    alter table(:vehicle_types) do
-      add :vehicle_id, references(:vehicles, type: :uuid, column: :id, on_delete: :delete_all), null: false
     end
 
     alter table(:vehicles) do

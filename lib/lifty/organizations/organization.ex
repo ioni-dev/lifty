@@ -7,14 +7,14 @@ defmodule Lifty.Organizations.Organization do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "organizations" do
-    field :address, :string
     field :cellphone, :string
+    field :full_name, :string
     field :confirmed_at, :naive_datetime
     field :country, :string
     field :email, :string
     field :is_active, :boolean, default: false
-    field :montly_deliveries, :integer
-    field :name, :string
+    field :vehicule_quantity, :integer
+    field :organization_name, :string
     field :password, :string, virtual: true
     field :password_hash, :string
     field :taxpayer_id, :string
@@ -27,8 +27,8 @@ defmodule Lifty.Organizations.Organization do
   @doc false
   def changeset(%Organization{} = organization, attrs) do
     organization
-    |> cast(attrs, [:email, :password, :password, :confirmed_at, :name, :taxpayer_id, :country, :cellphone, :montly_deliveries, :website, :is_active, :address])
-    |> validate_required([:email, :password, :password, :confirmed_at, :name, :taxpayer_id, :country, :cellphone, :montly_deliveries, :website, :is_active, :address])
+    |> cast(attrs, [:email, :password, :full_name, :confirmed_at, :organization_name, :country, :cellphone, :vehicule_quantity, :is_active, :role])
+    |> validate_required([:email, :password, :confirmed_at, :organization_name, :full_name, :country, :cellphone, :vehicule_quantity, :is_active, :role])
     |> cast_embed(:permissions, required: false)
     |> validate_email()
     # |> validate_required([:permissions])

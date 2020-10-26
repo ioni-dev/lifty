@@ -6,18 +6,14 @@ defmodule Lifty.Repo.Migrations.CreateClients do
 
     create table(:clients, primary_key: false) do
       add :id, :uuid, primary_key: true
-      add :email, :citext, null: false
-      add :name, :string, null: false
+      add :email, :citext, null: true, default: ""
+      add :name, :string, null: true, default: ""
       add :first_name, :string, null: false
       add :last_name, :string, null: false
-      add :cellphone, :string, null: false
-      add :birthday, :date, null: false
-      add :city, :string, null: false
-      add :country, :string, null: false
-      add :password_hash, :string, null: false
-      add :is_active, :boolean, default: false
-      add :confirmed_at, :naive_datetime
-      add :delivery_destination, :string
+      add :contact_number, :string, null: true, default: ""
+      add :address, :string, null: false
+      add :is_active, :boolean, default: true
+
       timestamps(type: :utc_datetime)
     end
 
