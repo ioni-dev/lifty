@@ -3,6 +3,7 @@ defmodule Lifty.Organizations.Organization do
   import Ecto.Changeset
   alias Lifty.Organizations.Organization
   alias Lifty.Drivers.Driver.Permissions
+  alias Lifty.Repo
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
@@ -17,21 +18,28 @@ defmodule Lifty.Organizations.Organization do
     field :organization_name, :string
     field :password, :string, virtual: true
     field :password_hash, :string
-    field :taxpayer_id, :string
-    field :website, :string
     embeds_one :permissions, Permissions
-    has_many :drivers, Lifty.Drivers.Driver
+    has_many :drivers, Lifty.Drivers.Driver, foreign_key: :organization_id
     timestamps()
   end
 
   @doc false
   def changeset(%Organization{} = organization, attrs) do
+    IO.inspect(organization)
+    aa = %Organization{
+          cellphone: "443343434",
+          country: "Uruguay",
+          email: "test@test.com",
+          full_name: "eadadddeadae",
+          organization_name: "tetetete",
+          password: "qwertyjbjbjbjbjbbj",
+          vehicule_quantity: 5
+        }
     organization
-    |> cast(attrs, [:email, :password, :full_name, :confirmed_at, :organization_name, :country, :cellphone, :vehicule_quantity, :is_active, :role])
-    |> validate_required([:email, :password, :confirmed_at, :organization_name, :full_name, :country, :cellphone, :vehicule_quantity, :is_active, :role])
+    |> cast(attrs, [:email, :password, :full_name, :organization_name, :country, :cellphone, :vehicule_quantity])
+    |> validate_required([:email, :password, :full_name, :organization_name, :country, :cellphone, :vehicule_quantity])
     |> cast_embed(:permissions, required: false)
     |> validate_email()
-    # |> validate_required([:permissions])
     |> validate_password()
     |> put_password_hash()
   end

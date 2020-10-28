@@ -20,26 +20,17 @@ defmodule Lifty.Drivers.Driver do
     field :password_hash, :string
     field :password, :string, virtual: true
     field :cellphone, :string
-    field :address, :string
-    field :city, :string
-    field :country, :string
     field :profile_pic, :string
-    embeds_one :photos_id, PhotosId
-    embeds_one :driver_license, DriverLicense
-    field :date_of_birth, :date
     field :years_of_experience, :integer
-    field :ways_of_reference, :string
-    field :email_verified, :boolean , default: false
-    field :active, :boolean , default: true
-    field :last_logged_in, :utc_datetime
+    field :is_active, :boolean
+    field :last_logged_in, :date
     embeds_many :certifications, Certifications
     embeds_one :emergency_contact, EmergencyContact
-    embeds_many :work_reference, WorkReference
-    embeds_many :referred_contact, ReferredContact
     embeds_one :permissions, Permissions
     belongs_to :organization, Lifty.Organizations.Organization, foreign_key: :organization_id, type: :binary_id
     has_many :pickup, Lifty.Pickups.Pickup
     has_many :ride, Lifty.Rides.Ride
+    # belongs_to :organization, Lifty.Organizations.Organization
 
     timestamps(type: :utc_datetime)
   end
@@ -47,14 +38,10 @@ defmodule Lifty.Drivers.Driver do
     @doc false
 def changeset(%Driver{} = driver, attrs) do
   driver
-  |> cast(attrs, [:first_name, :last_name, :email, :password, :cellphone, :address, :city, :country, :profile_pic,
-    :date_of_birth, :years_of_experience, :ways_of_reference, :email_verified, :active, :last_logged_in, :organization_id])
-  |> cast_embed(:photos_id, required: true)
-  |> cast_embed(:driver_license, required: true)
-  |> cast_embed(:certifications, required: true)
+  |> cast(attrs, [:first_name, :last_name, :email, :password, :cellphone, :profile_pic, :years_of_experience,
+      :is_active, :last_logged_in, :organization_id])
+  |> cast_embed(:certifications, required: false)
   |> cast_embed(:emergency_contact, required: true)
-  |> cast_embed(:work_reference, required: true)
-  |> cast_embed(:referred_contact, required: true)
   |> cast_embed(:permissions, required: false)
   |> validate_email()
   # |> validate_required([:permissions])
@@ -103,73 +90,6 @@ defmodule Certifications do
   def changeset(schema, params) do
     schema
     |> cast(params, [:title, :path])
-  end
-end
-
-defmodule WorkReference do
-  use Ecto.Schema
-  import Ecto.Changeset
-  @derive {Jason.Encoder, only: [:full_name, :phone, :relation, :note]}
-  embedded_schema do
-    field :full_name, :string
-    field :phone, :string
-    field :relation, :string
-    field :note, :string
-  end
-
-  def changeset(schema, params) do
-    schema
-    |> cast(params, [:full_name, :phone, :relation, :note])
-  end
-end
-
-defmodule ReferredContact do
-  use Ecto.Schema
-  import Ecto.Changeset
-  @derive {Jason.Encoder, only: [:full_name, :email, :phone, :relation, :role, :note]}
-  embedded_schema do
-    field :full_name, :string
-    field :email, :string
-    field :phone, :string
-    field :relation, :string
-    field :role, :string
-    field :note, :string
-  end
-
-  def changeset(schema, params) do
-    schema
-    |> cast(params, [:full_name, :email, :phone, :relation, :role, :note])
-  end
-end
-
-defmodule PhotosId do
-  use Ecto.Schema
-  import Ecto.Changeset
-  @derive {Jason.Encoder, only: [:front_path, :back_path]}
-  embedded_schema do
-    field :front_path, :string
-    field :back_path, :string
-  end
-
-  def changeset(schema, params) do
-    schema
-    |> cast(params, [:front_path, :back_path])
-  end
-end
-
-defmodule DriverLicense do
-  use Ecto.Schema
-  import Ecto.Changeset
-  @derive {Jason.Encoder, only: [:front_path, :back_path]}
-
-  embedded_schema do
-    field :front_path, :string
-    field :back_path, :string
-  end
-
-  def changeset(schema, params) do
-    schema
-    |> cast(params, [:front_path, :back_path])
   end
 end
 

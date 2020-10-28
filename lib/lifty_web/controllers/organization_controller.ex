@@ -14,12 +14,17 @@ defmodule LiftyWeb.OrganizationController do
   end
 
   def create(conn, %{"organization" => organization_params}) do
+    IO.inspect(organization_params)
     with {:ok, %Organization{} = organization} <- Organizations.create_organization(organization_params) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.organization_path(conn, :show, organization))
-      |> render("show.json", organization: organization)
+      |> render("organization.json", organization: organization)
+    else
+      :error ->
+        {:error, IO.inspect(:error)}
     end
+
   end
 
   def show(conn, %{"id" => id}) do

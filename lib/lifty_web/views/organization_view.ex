@@ -15,14 +15,12 @@ defmodule LiftyWeb.OrganizationView do
       email: organization.email,
       password_hash: organization.password_hash,
       password: organization.password,
-      confirmed_at: organization.confirmed_at,
-      name: organization.name,
-      taxpayer_id: organization.taxpayer_id,
+      full_name: organization.full_name,
       country: organization.country,
       cellphone: organization.cellphone,
-      montly_deliveries: organization.montly_deliveries,
-      website: organization.website,
-      is_active: organization.is_active,
-      address: organization.address}
+      vehicule_quantity: organization.vehicule_quantity,
+      organization_name: organization.organization_name,
+      is_active: organization.is_active
+    }
   end
 end

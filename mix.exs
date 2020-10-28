@@ -51,7 +51,8 @@ defmodule Lifty.MixProject do
       {:ueberauth, "~> 0.6.3"},
       {:ueberauth_identity, "~> 0.3.0"},
       {:guardian, "~> 2.1"},
-      {:comeonin, "~> 5.3"}
+      {:comeonin, "~> 5.3"},
+      {:cors_plug, "~> 1.5"},
     ]
   end
 

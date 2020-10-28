@@ -12,7 +12,7 @@ defmodule Lifty.Repo.Migrations.CreateDrivers do
       add :cellphone, :string, null: false
       add :profile_pic, :string, null: true, default: ""
       add :years_of_experience, :integer, null: false
-      add :active, :boolean, null: false, default: true
+      add :is_active, :boolean, null: false, default: true
       add :last_logged_in, :utc_datetime, [null: false, default: fragment("current_date")]
       add :certifications, {:array, :map}, null: true, default: []
       add :emergency_contact, :map, null: true, default: %{}
