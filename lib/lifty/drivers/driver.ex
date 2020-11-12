@@ -2,14 +2,8 @@ defmodule Lifty.Drivers.Driver do
   use Ecto.Schema
   import Ecto.Changeset
   alias Lifty.Drivers.Driver
-  alias Lifty.Drivers.Driver.ReferredContact
-  alias Lifty.Drivers.Driver.WorkReference
   alias Lifty.Drivers.Driver.Certifications
-  alias Lifty.Drivers.Driver.DriverLicense
   alias Lifty.Drivers.Driver.EmergencyContact
-  alias Lifty.Drivers.Driver.DriverLicense
-  alias Lifty.Drivers.Driver.EmergencyContact
-  alias Lifty.Drivers.Driver.PhotosId
   alias Lifty.Drivers.Driver.Permissions
   @primary_key {:id, :binary_id, autogenerate: true}
 
@@ -23,7 +17,7 @@ defmodule Lifty.Drivers.Driver do
     field :profile_pic, :string
     field :years_of_experience, :integer
     field :is_active, :boolean
-    field :last_logged_in, :date
+    field :last_logged_in, :utc_datetime
     embeds_many :certifications, Certifications
     embeds_one :emergency_contact, EmergencyContact
     embeds_one :permissions, Permissions
@@ -38,10 +32,10 @@ defmodule Lifty.Drivers.Driver do
     @doc false
 def changeset(%Driver{} = driver, attrs) do
   driver
-  |> cast(attrs, [:first_name, :last_name, :email, :password, :cellphone, :profile_pic, :years_of_experience,
-      :is_active, :last_logged_in, :organization_id])
+  |> cast(attrs, [:first_name, :last_name, :email, :password, :cellphone, :years_of_experience,
+      :is_active, :organization_id])
   |> cast_embed(:certifications, required: false)
-  |> cast_embed(:emergency_contact, required: true)
+  |> cast_embed(:emergency_contact, required: false)
   |> cast_embed(:permissions, required: false)
   |> validate_email()
   # |> validate_required([:permissions])

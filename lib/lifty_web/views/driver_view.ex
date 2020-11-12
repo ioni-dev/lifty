@@ -16,21 +16,12 @@ defmodule LiftyWeb.DriverView do
       last_name: driver.last_name,
       email: driver.email,
       cellphone: driver.cellphone,
-      address: driver.address,
-      city: driver.city,
-      country: driver.country,
       profile_pic: driver.profile_pic,
-      photos_id: driver.photos_id,
-      driver_license: driver.driver_license,
-      date_of_birth: driver.date_of_birth,
       years_of_experience: driver.years_of_experience,
-      ways_of_reference: driver.ways_of_reference,
-      email_verified: driver.email_verified,
-      active: driver.active,
+      is_active: driver.is_active,
       last_logged_in: driver.last_logged_in,
       certifications: driver.certifications,
       emergency_contact: driver.emergency_contact,
-      work_reference: driver.work_reference,
-      referred_contact: driver.referred_contact}
+  }
   end
 end

@@ -13,21 +13,19 @@ defmodule Lifty.Clients.Client do
     field :first_name, :string
     field :last_name, :string
     field :company_name, :string
-    field :password_hash, :string
-    field :password, :string, virtual: true
     field :is_active, :boolean
-    embeds_one :permissions_type, Permissions
+    # embeds_one :permissions_type, Permissions
     has_many :request, Lifty.Requests.Request
     has_many :pickup, Lifty.Pickups.Pickup
     has_many :ride, Lifty.Rides.Ride
 
-    timestamps()
+    timestamps(type: :utc_datetime)
   end
 
   @doc false
   def changeset(client, attrs) do
     client
-    |> cast(attrs, [:contact_number, :address, :email, :first_name, :last_name, :company_name, :password, :is_active])
-    |> validate_required([:contact_number, :address, :email, :first_name, :last_name, :company_name, :password, :is_active])
+    |> cast(attrs, [:contact_number, :address, :email, :first_name, :last_name, :company_name, :is_active])
+    |> validate_required([:contact_number, :address, :email, :first_name, :last_name, :company_name, :is_active])
   end
 end

@@ -9,6 +9,7 @@ defmodule LiftyWeb.DriverController do
   def index(conn, _params) do
     current_user = Guardian.Plug.current_resource(conn)
     drivers = Drivers.list_drivers(current_user.id)
+    IO.inspect("-----------------------------------")
     IO.inspect(drivers)
     render(conn, "index.json", drivers: drivers)
   end
@@ -19,6 +20,7 @@ defmodule LiftyWeb.DriverController do
       |> put_status(:created)
       |> put_resp_header("location", Routes.driver_path(conn, :show, driver))
       |> render("show.json", driver: driver)
+
     end
   end
 

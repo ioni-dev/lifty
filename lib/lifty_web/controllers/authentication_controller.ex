@@ -42,7 +42,7 @@ defmodule LiftyWeb.AuthenticationController do
 
         conn
         |> put_resp_header("authorization", "Bearer #{jwt}")
-        |> json(%{token: jwt})
+        |> json(%{token: jwt, id: user.id})
 
       # Handle our own error to keep it generic
       {:error, _reason} ->

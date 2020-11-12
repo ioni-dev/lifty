@@ -17,7 +17,7 @@ defmodule LiftyWeb.OrganizationController do
     IO.inspect(organization_params)
     with {:ok, %Organization{} = organization} <- Organizations.create_organization(organization_params) do
       conn
-      |> put_status(:created)
+      |> put_status(201)
       |> put_resp_header("location", Routes.organization_path(conn, :show, organization))
       |> render("organization.json", organization: organization)
     else
