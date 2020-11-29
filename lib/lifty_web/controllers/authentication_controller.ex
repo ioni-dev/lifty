@@ -46,9 +46,10 @@ defmodule LiftyWeb.AuthenticationController do
 
       # Handle our own error to keep it generic
       {:error, _reason} ->
+        # body = Jason.encode!(%{message: "Email or password not correct"})
+
         conn
-        |> put_status(401)
-        |> json(%{message: "user not found"})
+          |>send_resp(401, "check your email and password")
     end
   end
 end

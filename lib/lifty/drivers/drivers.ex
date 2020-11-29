@@ -56,6 +56,10 @@ defmodule Lifty.Drivers do
     %Driver{}
     |> Driver.changeset(attrs)
     |> Repo.insert()
+    |> case do
+      {:ok, driver} -> {:ok, driver}
+      {:error, changeset} -> {:error, changeset}
+    end
   end
 
   @doc """
